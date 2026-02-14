@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Wife, Bushra</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: radial-gradient(circle, #ffafbd, #ffc3a0, #ff677d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #container {
+            background: rgba(255, 255, 255, 0.92);
+            padding: 3rem;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(211, 47, 47, 0.3);
+            border: 4px solid #ffffff;
+            max-width: 450px;
+            width: 85%;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+        }
+
+        h1 { color: #d32f2f; margin-bottom: 0.5rem; font-size: 2rem; }
+        .subtitle { color: #ff4d6d; font-size: 1.5rem; margin-bottom: 2rem; font-weight: bold; }
+        
+        .buttons-container {
+            display: flex;
+            flex-direction: column; /* Stacked vertically for better control */
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            min-height: 150px;
+        }
+
+        button {
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            width: 150px; /* Fixed width so they match */
+        }
+
+        #yesBtn { 
+            background: linear-gradient(45deg, #ff4d6d, #ff758c); 
+            color: white; 
+            z-index: 2;
+        }
+        
+        #yesBtn:hover { transform: scale(1.1); }
+
+        #noBtn {
+            background-color: #fce4ec;
+            color: #d32f2f;
+            border: 1px solid #ffc107;
+            /* No longer floating at start */
+            position: relative; 
+            z-index: 1;
+        }
+
+        .hidden { display: none; }
+
+        .heart-particle {
+            position: fixed;
+            color: #ff4d6d;
+            pointer-events: none;
+            animation: floatUp 4s linear forwards;
+            z-index: 1;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        .main-heart { 
+            color: #ff4d6d; 
+            font-size: 4.5rem; 
+            margin-bottom: 10px; 
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="askSection">
+            <div class="main-heart">❤️</div>
+            <h1>My Dear Lovely Wife Bushra ❤️</h1>
+            <div class="subtitle">Will you be my Valentine?</div>
+            <div class="buttons-container">
+                <button id="yesBtn">Yes!</button>
+                <button id="noBtn">No</button>
+            </div>
+        </div>
+
+        <div id="successSection" class="hidden">
+            <div class="main-heart">💖</div>
+            <h1>I knew it, Meri Jaan!</h1>
+            <p style="color: #c2185b; font-size: 1.3rem; line-height: 1.6;">
+                You make every day feel like a dream. <br>
+                I'm the luckiest man to have you by my side.<br>
+                <strong style="font-size: 1.5rem;">I love you forever!</strong>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const askSection = document.getElementById('askSection');
+        const successSection = document.getElementById('successSection');
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            const hearts = ['❤️', '💖', '💝', '💕'];
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
+            heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            const duration = (Math.random() * 2 + 3);
+            heart.style.animationDuration = duration + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, duration * 1000);
+        }
+
+        function moveButton() {
+            // Change position to fixed only once they interact
+            noBtn.style.position = 'fixed';
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+
+        noBtn.addEventListener('click', () => {
+            alert("Nice try, Bushra! But you have to click Yes! 😉");
+        });
+
+        yesBtn.addEventListener('click', () => {
+            askSection.classList.add('hidden');
+            successSection.classList.remove('hidden');
+            document.body.style.background = "radial-gradient(circle, #ffdde1, #ee9ca7)";
+            setInterval(createHeart, 150);
+        });
+    </script>
+</body>
+</html>
